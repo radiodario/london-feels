@@ -1,5 +1,5 @@
 
-
+var io = require('socket.io')(3080);
 var secrets = require('./secrets');
 
 var Twitter = require('node-tweet-stream');
@@ -18,6 +18,10 @@ pipe.on('tweet', function(tweet) {
   console.log(formatPlace(tweet));
   console.log("sent:", sentiment(tweet.text).score);
   console.log('----------------------------');
+
+  tweet.sentiment = sentiment(tweet.text);
+
+  io.emit('tweet', tweet);
 
 });
 
