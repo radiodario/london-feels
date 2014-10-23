@@ -53,6 +53,8 @@ pipe.on('tweet', function(tweet) {
   // console.log("sent:", sentiment(tweet.text).score);
   // console.log('----------------------------');
 
+  console.log('tweet: processed');
+
   tweet.sentiment = sentiment(tweet.text);
 
   var slimTweet = {
