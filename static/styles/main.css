@@ -23,6 +23,10 @@ body {
   font-weight: bold;
 }
 
+.tiny {
+  font-size: 0.4em;
+}
+
 /* required styles */
 .leaflet-map-pane,
 .leaflet-tile,
