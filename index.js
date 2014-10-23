@@ -66,6 +66,7 @@ pipe.on('tweet', function(tweet) {
       name: tweet.user.name,
       screen_name: tweet.user.screen_name,
       profile_image_url: tweet.user.profile_image_url
+      profile_image_url_https: tweet.user.profile_image_url_https
     },
     text: tweet.text,
     place: {

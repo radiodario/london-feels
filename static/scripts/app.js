@@ -145,7 +145,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_ced528fd.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_517ed84d.js","/")
 },{"./ui/tweet.html":2,"buffer":4,"d3":3,"leaflet":8,"moment":9,"oMfpAn":7,"react":144,"socket.io-client":145}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports=(function() {var t = function anonymous(locals, filters, escape, rethrow) {
@@ -159,7 +159,7 @@ escape = escape || function (html){
 };
 var buf = [];
 with (locals || {}) { (function(){ 
- buf.push('<div class="tweet">\n  <div class="tweet-header">\n    <a href="http://twitter.com/', escape((3,  user.screen_name )), '" target="_blank">\n      <img class="user-pic" src="', escape((4,  user.profile_image_url )), '"/>\n      <span class="username">', escape((5,  user.name )), '</span>\n    </a>\n  </div>\n  <div class="tweet-body">', escape((8,  text )), '</div>\n  <div class="tweet-footer">', escape((9,  place.name )), ' - ', escape((9,  created_human )), '</div>\n</div>\n'); })();
+ buf.push('<div class="tweet">\n  <div class="tweet-header">\n    <a href="http://twitter.com/', escape((3,  user.screen_name )), '" target="_blank">\n      <img class="user-pic" src="', escape((4,  user.profile_image_url_https )), '"/>\n      <span class="username">', escape((5,  user.name )), '</span>\n    </a>\n  </div>\n  <div class="tweet-body">', escape((8,  text )), '</div>\n  <div class="tweet-footer">', escape((9,  place.name )), ' - ', escape((9,  created_human )), '</div>\n</div>\n'); })();
 } 
 return buf.join('');
 }; return function(l) { return t(l) }}())
