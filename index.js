@@ -1,29 +1,77 @@
-
-var io = require('socket.io')(3080);
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 var secrets = require('./secrets');
-
+var cors = require('cors');
 var Twitter = require('node-tweet-stream');
 var sentiment = require('sentiment');
+
+var winston = require('winston');
+
+var cache = require('./lib/cache');
+
+server.listen(3080);
+
+
+
+app.get('/latest', cors(), function (req, res, next) {
+  cache.getLatestTweets(function (error, tweets) {
+    if (error) {
+      next();
+    }
+
+    var tweets = tweets.map(JSON.parse);
+
+    res.send(tweets);
+  });
+});
+
+app.use(express.static('static'))
 
 
 // create the pipe
 var pipe = new Twitter(secrets);
 
-
 pipe.on('tweet', function(tweet) {
 
-  // debugger;
-  console.log(tweet.user.name + ':');
-  console.log('\t' + tweet.text);
-  console.log(formatPlace(tweet));
-  console.log("sent:", sentiment(tweet.text).score);
-  console.log('----------------------------');
+  if (!tweet.coordinates) {
+    return;
+  }
+
+  // XXX use logger
+  // console.log(tweet.user.name + ':');
+  // console.log('\t' + tweet.text);
+  // console.log(formatPlace(tweet));
+  // console.log("sent:", sentiment(tweet.text).score);
+  // console.log('----------------------------');
 
   tweet.sentiment = sentiment(tweet.text);
+
+  debugger;
+
+  var slimTweet = {
+    id: tweet.id,
+    created_at: tweet.created_at,
+    sentiment: sentiment(tweet.text),
+    coordinates: tweet.coordinates,
+    user: {
+      name: tweet.user.name,
+      screen_name: tweet.user.screen_name,
+      profile_image_url: tweet.user.profile_image_url
+    },
+    text: tweet.text,
+    place: {
+      name: tweet.place.name
+    }
+  };
+
+  cache.add(slimTweet);
 
   io.emit('tweet', tweet);
 
 });
+
 
 pipe.on('error', function (err) {
   console.log('oops', err);
@@ -37,7 +85,6 @@ var places = {
 }
 
 pipe.location(places.london);
-
 
 
 // gets a point
