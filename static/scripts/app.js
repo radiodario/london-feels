@@ -28,7 +28,14 @@ var mapCont = document.querySelector('#map');
 
 function resizeMap () {
 
-  mapCont.style.height = ((window.innerHeight * 0.8) | 0) + "px";
+  var height
+  if (window.innerWidth > 768) {
+    height = ((window.innerHeight * 0.8) | 0) + "px";
+  } else {
+    height = ((window.innerHeight * 0.7) | 0) + "px";
+  }
+
+  mapCont.style.height = height;
   mapCont.style.width = "100%"
 
 }
@@ -67,7 +74,19 @@ d3.json(url+'/latest', function(error, tweets) {
   if (error) {
     return console.error('error grabbing latest tweets:', error);
   }
-  tweets.map(drawPoint);
+
+  console.log("loaded", tweets.length, "tweets")
+
+  var i = 0;
+  d3.timer(function(d) {
+    drawPoint(tweets[i]);
+
+    return !(++i < tweets.length);
+
+  }, 10)
+
+  // tweets.map(drawPoint);
+
 })
 
 
@@ -89,13 +108,23 @@ function drawPoint (tweet) {
 
   var col = color(tweet.sentiment.score);
 
-  var circle = L.circle(pos, circleRadius, {
+  var factor = 5;
+
+  var circle = L.circle(pos, circleRadius * factor, {
     color: col,
     weight: 2,
     opacity: 1,
     fillColor: col,
     fillOpacity: 0.85
   })
+
+  d3.timer(function() {
+    circle.setRadius(circleRadius * factor)
+    factor -= 0.1;
+
+    return (factor <= 1)
+
+  });
 
 
   tweet.created_human = moment(tweet.created_at).format(time_fmt)
@@ -113,6 +142,7 @@ function drawPoint (tweet) {
   removeOldTweets();
 
   calculateFeels();
+
 }
 
 function removeOldTweets() {
@@ -161,7 +191,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_2345a9fd.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_cdf3da0f.js","/")
 },{"./feels":2,"./ui/tweet.html":3,"buffer":5,"d3":4,"leaflet":9,"moment":10,"oMfpAn":8,"react":145,"socket.io-client":146}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
