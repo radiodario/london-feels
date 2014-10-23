@@ -22,7 +22,7 @@ this.socket = io(url);
 
 var avgFormat = d3.format(".2f");
 var color = d3.scale.linear()
-   .domain([-10,10])  // min/max of data
+   .domain([-11,11])  // min/max of data
    .range(["rgb(250, 20, 100)", "rgb(30, 120, 250)"])
    .interpolate(d3.interpolateHcl);
 
@@ -210,11 +210,12 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_60d27cab.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_c2e16fcd.js","/")
 },{"./feels":2,"./ui/tweet.html":3,"buffer":5,"d3":4,"leaflet":9,"moment":10,"oMfpAn":8,"react":145,"socket.io-client":146}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
-  '-10': 'like suicide is the only option',
+  '-11': 'like suicide is the only option',
+  '-10': 'the end coming',
   '-9' : 'Terrible',
   '-8' : 'OH GOD WHY',
   '-7' : 'Snow day',
@@ -234,7 +235,8 @@ module.exports = {
   '7'  : 'Incredible',
   '8'  : 'Ecstatic',
   '9'  : 'Like a boss',
-  '10' : 'Nirvana'
+  '10' : 'Nirvana',
+  '11' : 'something no words can describe',
 }
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/feels.js","/")
 },{"buffer":5,"oMfpAn":8}],3:[function(require,module,exports){
