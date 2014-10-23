@@ -19,6 +19,7 @@ h1 {
 
 .tweet {
   margin-left: 58px;
+  min-height: 50px;
 }
 .tweet .tweet-header a {
   text-decoration: none;
@@ -29,6 +30,9 @@ h1 {
   margin-left: -58px;
 }
 .tweet .tweet-header a span.username {
+  font-weight: bold;
+}
+.tweet .tweet-header a span.feels {
   font-weight: bold;
 }
 .tweet .tweet-footer {
