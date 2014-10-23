@@ -66,7 +66,7 @@ this.socket.on('tweet', drawPoint);
 
 var tweets = [];
 
-var time_fmt = "HH:MM - D MMM YYYY";
+var time_fmt = "HH:mm - D MMM YYYY";
 
 function drawPoint (tweet) {
 
@@ -145,7 +145,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_517ed84d.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_abcc4c55.js","/")
 },{"./ui/tweet.html":2,"buffer":4,"d3":3,"leaflet":8,"moment":9,"oMfpAn":7,"react":144,"socket.io-client":145}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports=(function() {var t = function anonymous(locals, filters, escape, rethrow) {
