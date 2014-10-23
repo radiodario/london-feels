@@ -35,6 +35,10 @@ h1 {
 .tweet .tweet-header a span.feels {
   font-weight: bold;
 }
+.tweet .tweet-body a {
+  text-decoration: none;
+  color: #333;
+}
 .tweet .tweet-footer {
   font-size: 0.8em;
   font-weight: bold;

@@ -134,8 +134,9 @@ function drawPoint (tweet, hidePopup) {
     factor -= 0.1;
 
     return (factor <= 1)
-
   });
+
+  console.log("http://twitter.com/" + tweet.user.screen_name + '/status/' + tweet.id_str );
 
 
   tweet.created_human = moment(tweet.created_at).format(time_fmt)
@@ -210,7 +211,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_c2e16fcd.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_89982b64.js","/")
 },{"./feels":2,"./ui/tweet.html":3,"buffer":5,"d3":4,"leaflet":9,"moment":10,"oMfpAn":8,"react":145,"socket.io-client":146}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
@@ -252,7 +253,7 @@ escape = escape || function (html){
 };
 var buf = [];
 with (locals || {}) { (function(){ 
- buf.push('<div class="tweet">\n  <div class="tweet-header">\n    <a href="http://twitter.com/', escape((3,  user.screen_name )), '" target="_blank">\n      <img class="user-pic" src="', escape((4,  user.profile_image_url_https )), '"/>\n      <span class="username">', escape((5,  user.name )), '</span> feels <span class="feels" style="color:', escape((5,  color )), ';">', escape((5,  feels )), '</span>\n    </a>\n  </div>\n  <div class="tweet-body">', escape((8,  text )), '</div>\n  <div class="tweet-footer">', escape((9,  place.name )), ' - ', escape((9,  created_human )), '</div>\n</div>\n'); })();
+ buf.push('<div class="tweet">\n  <div class="tweet-header">\n    <a href="http://twitter.com/', escape((3,  user.screen_name )), '" target="_blank">\n      <img class="user-pic" src="', escape((4,  user.profile_image_url_https )), '"/>\n      <span class="username">', escape((5,  user.name )), '</span> feels <span class="feels" style="color:', escape((5,  color )), ';">', escape((5,  feels )), '</span>\n    </a>\n  </div>\n  <div class="tweet-body">\n    <a class="tweet-link" href="http://twitter.com/', escape((9,  user.screen_name )), '/status/', escape((9,  id_str )), '" target="_blank">\n      ', escape((10,  text )), '\n    </a>\n  </div>\n  <div class="tweet-footer">\n    ', escape((14,  place.name )), ' - ', escape((14,  created_human )), '\n  </div>\n</div>\n'); })();
 } 
 return buf.join('');
 }; return function(l) { return t(l) }}())

@@ -61,6 +61,7 @@ pipe.on('tweet', function(tweet) {
 
   var slimTweet = {
     id: tweet.id,
+    id_str: tweet.id_str,
     created_at: tweet.created_at,
     sentiment: sentiment(tweet.text),
     coordinates: tweet.coordinates,
