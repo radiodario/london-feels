@@ -9,6 +9,12 @@ body {
 h1 {
   margin: 1em;
   font-family: "Permanent Marker";
+  /* Small devices (tablets, 768px and up) */
+}
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1em;
+  }
 }
 
 .tweet {
@@ -36,6 +42,23 @@ h1 {
 
 .tiny {
   font-size: 0.4em;
+}
+
+.footer {
+  height: 60px;
+  margin-left: 1em;
+}
+.footer .tagline {
+  margin-top: 45px;
+  margin-left: 58px;
+  font-size: 0.9em;
+}
+.footer .tagline img {
+  float: left;
+  margin-left: -58px;
+  margin-top: -34px;
+  height: 48px;
+  width: 48px;
 }
 
 /* required styles */

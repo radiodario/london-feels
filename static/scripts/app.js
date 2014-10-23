@@ -39,7 +39,16 @@ window.addEventListener('resize', resizeMap)
 
 
 var map = L.map('map');
-map.setView([51.502, -0.08], 13);
+
+var intitialZoomLevel = 13;
+var circleRadius = 50;
+
+if (window.innerWidth < 768) {
+  initialZoomLevel = 11;
+  circleRadius = 60;
+}
+
+map.setView([51.502, -0.08], initialZoomLevel);
 
 var mapSource = "//stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"
 
@@ -80,7 +89,7 @@ function drawPoint (tweet) {
 
   var col = color(tweet.sentiment.score);
 
-  var circle = L.circle(pos, 40, {
+  var circle = L.circle(pos, circleRadius, {
     color: col,
     weight: 2,
     opacity: 1,
@@ -152,7 +161,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_8a5aa4a6.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_16c51775.js","/")
 },{"./feels":2,"./ui/tweet.html":3,"buffer":5,"d3":4,"leaflet":9,"moment":10,"oMfpAn":8,"react":145,"socket.io-client":146}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
