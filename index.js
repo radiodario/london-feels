@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var secrets = require('./secrets');
+
 var cors = require('cors');
 var Twitter = require('node-tweet-stream');
 var sentiment = require('sentiment');
@@ -11,8 +11,15 @@ var winston = require('winston');
 
 var cache = require('./lib/cache');
 
-server.listen(3080);
+server.listen(process.env.PORT);
 
+
+var secrets = {
+  consumer_key: process.env.TW_CONSUMER_KEY,
+  consumer_secret: process.env.TW_CONSUMER_SECRET,
+  token: process.env.TW_TOKEN,
+  token_secret: process.env.TW_TOKEN_SECRET
+};
 
 
 app.get('/latest', cors(), function (req, res, next) {
@@ -47,8 +54,6 @@ pipe.on('tweet', function(tweet) {
   // console.log('----------------------------');
 
   tweet.sentiment = sentiment(tweet.text);
-
-  debugger;
 
   var slimTweet = {
     id: tweet.id,
