@@ -136,9 +136,6 @@ function drawPoint (tweet, hidePopup) {
     return (factor <= 1)
   });
 
-  console.log("http://twitter.com/" + tweet.user.screen_name + '/status/' + tweet.id_str );
-
-
   tweet.created_human = moment(tweet.created_at).format(time_fmt)
 
   lastUpdated.innerHTML = "" + tweet.created_human;
@@ -211,7 +208,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_89982b64.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_89f6d265.js","/")
 },{"./feels":2,"./ui/tweet.html":3,"buffer":5,"d3":4,"leaflet":9,"moment":10,"oMfpAn":8,"react":145,"socket.io-client":146}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
