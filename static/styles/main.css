@@ -40,17 +40,42 @@ h1 {
   box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.1);
 }
 
+.lastUpdated {
+  margin-top: 3px;
+  float: right;
+}
+
+.controls {
+  padding: 5px;
+  background-color: #333;
+  color: white;
+}
+@media (min-width: 768px) {
+  .controls {
+    padding: 5px 32px;
+  }
+}
+.controls label {
+  font-size: 0.75em;
+}
+
+h1 {
+  margin-top: 0.7em;
+  margin-bottom: 0.3em;
+}
+
 .tiny {
-  font-size: 0.4em;
+  font-size: 0.75em;
 }
 
 .footer {
-  margin-left: 1em;
+  margin-left: 32px;
 }
 .footer .tagline {
   margin-top: 42px;
   margin-left: 70px;
-  font-size: 0.9em;
+  color: #555;
+  font-size: 0.89em;
 }
 .footer .tagline img {
   float: left;

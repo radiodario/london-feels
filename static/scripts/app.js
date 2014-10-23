@@ -9,6 +9,9 @@ var d3 = require('d3');
 var feels = require('./feels');
 var tweetTemplate = require('./ui/tweet.html');
 
+var londonStatus = document.querySelector('span.feeling');
+var lastUpdated = document.querySelector('span.lastUpdated');
+
 var L = require('leaflet');
 
 L.Icon.Default.imagePath = '/images/';
@@ -79,7 +82,7 @@ d3.json(url+'/latest', function(error, tweets) {
 
   var i = 0;
   d3.timer(function(d) {
-    drawPoint(tweets[i]);
+    drawPoint(tweets[i], true);
 
     return !(++i < tweets.length);
 
@@ -89,15 +92,23 @@ d3.json(url+'/latest', function(error, tweets) {
 
 })
 
+var follow = document.querySelector('input#follow');
 
 
-this.socket.on('tweet', drawPoint);
+this.socket.on('tweet', function(tweet) {
+
+  var hidePopup = !follow.checked;
+
+
+
+  drawPoint(tweet, hidePopup);
+});
 
 var tweets = [];
 
-var time_fmt = "HH:mm - D MMM YYYY";
+var time_fmt = "HH:mm:ss - D MMM YYYY";
 
-function drawPoint (tweet) {
+function drawPoint (tweet, hidePopup) {
 
   if (!tweet.coordinates) {
     return;
@@ -129,18 +140,22 @@ function drawPoint (tweet) {
 
   tweet.created_human = moment(tweet.created_at).format(time_fmt)
 
+  lastUpdated.innerHTML = "" + tweet.created_human;
+
   var popupContent = tweetTemplate(tweet);
 
   circle.bindPopup(popupContent)
 
   circle.addTo(map);
 
-  tweet.circle = circle;
+  if (!hidePopup && map.getBounds().contains(pos)) {
+    circle.openPopup();
+  }
 
+  tweet.circle = circle;
   tweets.push(tweet);
 
   removeOldTweets();
-
   calculateFeels();
 
 }
@@ -164,7 +179,7 @@ function removeOldTweets() {
 
 }
 
-var londonStatus = document.querySelector('span.feeling');
+
 
 function calculateFeels () {
 
@@ -191,7 +206,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_cdf3da0f.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_d9ffb079.js","/")
 },{"./feels":2,"./ui/tweet.html":3,"buffer":5,"d3":4,"leaflet":9,"moment":10,"oMfpAn":8,"react":145,"socket.io-client":146}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
