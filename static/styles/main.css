@@ -45,18 +45,17 @@ h1 {
 }
 
 .footer {
-  height: 60px;
   margin-left: 1em;
 }
 .footer .tagline {
-  margin-top: 45px;
-  margin-left: 58px;
+  margin-top: 42px;
+  margin-left: 70px;
   font-size: 0.9em;
 }
 .footer .tagline img {
   float: left;
   margin-left: -58px;
-  margin-top: -34px;
+  margin-top: -18px;
   height: 48px;
   width: 48px;
 }
