@@ -28,7 +28,9 @@ app.get('/latest', cors(), function (req, res, next) {
       next();
     }
 
-    var tweets = tweets.map(JSON.parse);
+    var tweets = tweets.map(JSON.parse).sort(function(a, b) {
+      return new Date(a.created_at) - new Date(b.created_at)
+    });
 
     res.send(tweets);
   });
