@@ -107,7 +107,7 @@ function drawPoint (tweet) {
 
 function removeOldTweets() {
   // 10 minutes
-  var limit = new Date().getTime() - (60 * 10 * 1000);
+  var limit = new Date().getTime() - (60 * 60 * 1000);
 
   function getTimestamp(tweet) {
     return new Date(tweet.created_at).getTime();
@@ -145,7 +145,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_abcc4c55.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_c61ef4c6.js","/")
 },{"./ui/tweet.html":2,"buffer":4,"d3":3,"leaflet":8,"moment":9,"oMfpAn":7,"react":144,"socket.io-client":145}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports=(function() {var t = function anonymous(locals, filters, escape, rethrow) {
