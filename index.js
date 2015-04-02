@@ -36,8 +36,9 @@ app.get('/latest', cors(), function (req, res, next) {
   });
 });
 
-app.use(express.static('static'))
+app.use(express.static('static'));
 
+app.use('/3d', express.static('static_3d'));
 
 // create the pipe
 var pipe = new Twitter(secrets);

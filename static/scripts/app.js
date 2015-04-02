@@ -23,7 +23,7 @@ this.socket = io(url);
 var avgFormat = d3.format(".2f");
 var color = d3.scale.linear()
    .domain([-11,11])  // min/max of data
-   .range(["rgb(250, 20, 100)", "rgb(30, 120, 250)"])
+   .range(["rgb(253,88,6)", "rgb(44,163,219)"])
    .interpolate(d3.interpolateHcl);
 
 
@@ -208,7 +208,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_89f6d265.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_17edc831.js","/")
 },{"./feels":2,"./ui/tweet.html":3,"buffer":5,"d3":4,"leaflet":9,"moment":10,"oMfpAn":8,"react":145,"socket.io-client":146}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
