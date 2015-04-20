@@ -18205,15 +18205,16 @@ BlueprintOutputSentimentTweets.prototype.outputTweet = function(tweet) {
   self.world.addPickable(mesh, tweet.id_str);
 
   tweet.mesh = mesh;
-  // remove the object in 5 seconds
+  tweet.spawnedAt = new Date().getTime();
+  // add a times bounced counted
+  tweet.bounced = 0;
+
   self.tweets.push(tweet);
 
   VIZI.Messenger.on("pick-hover:" + tweet.id_str, function() {
     if (self.hidden) {
       return;
     }
-
-    tweet.stop = true;
 
     console.log("pick-hover:" + tweet.id_str)
 
@@ -18248,8 +18249,6 @@ BlueprintOutputSentimentTweets.prototype.outputTweet = function(tweet) {
       self.remove(self.pickedMesh);
     }
 
-    tweet.stop = false;
-
   });
 
 
@@ -18264,7 +18263,7 @@ BlueprintOutputSentimentTweets.prototype.outputTweet = function(tweet) {
 
 BlueprintOutputSentimentTweets.prototype.onTick = function() {
   var self = this;
-  var i, l, tw, elapsed;
+  var i, l, tw, elapsed, angle;
 
   var t = new Date().getTime();
 
@@ -18273,13 +18272,7 @@ BlueprintOutputSentimentTweets.prototype.onTick = function() {
     for (var l = self.tweets.length, i = l - 1; i > 0; i--) {
       tw = self.tweets[i];
 
-      elapsed = t - new Date(tw.created_at).getTime();
-
-      if (!tw.stop) {
-        tw.mesh.position.y = Math.abs(Math.sin(elapsed*0.001)*20);
-      }
-
-      tw.mesh.lookAt(self.world.camera.camera.position);
+      elapsed = t - tw.spawnedAt;
 
       // remove the ones aged more than 5 minutes;
       // XXX Make this a constant / configurable;
@@ -18287,7 +18280,24 @@ BlueprintOutputSentimentTweets.prototype.onTick = function() {
         self.remove(tw.mesh);
         self.world.removePickable(tw.mesh, tw.id_str);
         self.tweets.splice(i, 1);
+        continue;
       }
+
+      tw.mesh.lookAt(self.world.camera.camera.position);
+
+
+      if (!tw.stop) {
+        angle = elapsed*0.001;
+        tw.mesh.position.y = Math.abs(Math.sin(angle)*20);
+
+        // only bounce 3 times
+        if (Math.floor(angle / Math.PI) > 2) {
+          tw.stop = true;
+        }
+      }
+
+
+
 
       // remove them by age
     }
