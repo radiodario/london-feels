@@ -18127,7 +18127,8 @@ var BlueprintOutputSentimentTweets = function(options) {
   self.name = self.options.name;
 
   self.world;
-
+  self.pickedMesh;
+  self.lastPickedIdClick;
   self.tweets = [];
 
 }
@@ -18143,7 +18144,11 @@ BlueprintOutputSentimentTweets.prototype.init = function() {
    .range(["rgb(253,88,6)", "rgb(44,163,219)"])
    .interpolate(d3.interpolateHcl);
 
-  self.emit("initialised");
+  var loader = new THREE.JSONLoader();
+  loader.load('data/tweet.json', function(geometry, materials) {
+    self.geometry = geometry;
+    self.emit("initialised");
+  });
 
 };
 
@@ -18165,7 +18170,7 @@ BlueprintOutputSentimentTweets.prototype.outputTweet = function(tweet) {
     shading: THREE.FlatShading
   });
 
-  var barGeom = new THREE.BoxGeometry( 10, 1, 10 );
+  var barGeom = new THREE.BoxGeometry( 5, 1, 5 );
 
   // Shift each vertex by half the bar height
   // This means it will scale from the bottom rather than the centre
@@ -18180,10 +18185,16 @@ BlueprintOutputSentimentTweets.prototype.outputTweet = function(tweet) {
 
   var geoCoord = self.world.project(new VIZI.LatLon(coords[1], coords[0]));
 
-  var height = 100;
+  var height = 2;
 
-  var mesh = new THREE.Mesh(barGeom, material);
+  var mesh = new THREE.Mesh(self.geometry, material);
+  mesh.scale.x = height;
   mesh.scale.y = height;
+  mesh.scale.z = height;
+
+  // mesh.rotation.x = Math.PI / 2;
+
+  mesh.position.y = 10;
 
   // offset
   mesh.position.x = geoCoord.x;
@@ -18191,29 +18202,94 @@ BlueprintOutputSentimentTweets.prototype.outputTweet = function(tweet) {
 
   mesh.matrixAutoUpdate && mesh.updateMatrix();
 
+  self.world.addPickable(mesh, tweet.id_str);
 
-
-  // debugger;
-  self.add(mesh);
-  // self.world.addPickable(mesh, tweet.id);
   tweet.mesh = mesh;
   // remove the object in 5 seconds
   self.tweets.push(tweet);
 
+  VIZI.Messenger.on("pick-hover:" + tweet.id_str, function() {
+    if (self.hidden) {
+      return;
+    }
+
+    tweet.stop = true;
+
+    console.log("pick-hover:" + tweet.id_str)
+
+    if (self.pickedMesh) {
+      self.remove(self.pickedMesh);
+    }
+
+    var geomCopy = self.geometry.clone();
+
+    self.pickedMesh = new THREE.Mesh(geomCopy, new THREE.MeshBasicMaterial({
+      color: 0xffff22,
+      shading: THREE.FlatShading,
+      wireframe: true,
+      wireframeLinewidth: 3
+    }));
+
+    self.pickedMesh.position.copy(mesh.position)
+    self.pickedMesh.rotation.copy(mesh.rotation);
+    self.pickedMesh.scale.copy(mesh.scale);
+    self.pickedMesh.scale.x *= 1.01;
+    self.pickedMesh.scale.y *= 1.01;
+    self.pickedMesh.scale.z *= 1.01;
+    self.pickedMesh.renderDepth = -1.1 * self.options.layer;
+
+    self.pickedMesh.matrixAutoUpdate && self.pickedMesh.updateMatrix();
+
+    self.add(self.pickedMesh);
+  });
+
+  VIZI.Messenger.on("pick-off:" + tweet.id_str, function() {
+    if (self.pickedMesh) {
+      self.remove(self.pickedMesh);
+    }
+
+    tweet.stop = false;
+
+  });
+
+
+  VIZI.Messenger.on("pick-click:" + tweet.id_str, function() {
+    console.log("clicked: " + tweet.id_str)
+  });
+
+
+  self.add(mesh);
 
 }
 
 BlueprintOutputSentimentTweets.prototype.onTick = function() {
   var self = this;
-  var i, l, tw;
+  var i, l, tw, elapsed;
+
+  var t = new Date().getTime();
+
   if (self.tweets.length > 0) {
+    // iterate backwards forever yess ;_;
     for (var l = self.tweets.length, i = l - 1; i > 0; i--) {
       tw = self.tweets[i];
-      tw.mesh.scale.y *= 0.9998;
-      if (tw.mesh.scale.y < 1) {
+
+      elapsed = t - new Date(tw.created_at).getTime();
+
+      if (!tw.stop) {
+        tw.mesh.position.y = Math.abs(Math.sin(elapsed*0.001)*20);
+      }
+
+      tw.mesh.lookAt(self.world.camera.camera.position);
+
+      // remove the ones aged more than 5 minutes;
+      // XXX Make this a constant / configurable;
+      if (elapsed > (1000 * 60 * 60 * 5)) {
         self.remove(tw.mesh);
+        self.world.removePickable(tw.mesh, tw.id_str);
         self.tweets.splice(i, 1);
       }
+
+      // remove them by age
     }
   }
 }
@@ -18237,13 +18313,17 @@ var worldOptions = {
   center: new VIZI.LatLon(51.502, -0.08),
   zoom: 14,
   picking: true,
-  antialias: true
+  antialias: false
 };
 
 var world = new VIZI.World(worldOptions);
 
 var controls = new VIZI.ControlsMap(world.camera, {
   viewport: world.options.viewport
+});
+
+var pickControls = new VIZI.ControlsMousePick(world.camera, {
+  scene: world.scene
 });
 
 var mapConfig = require('./mapConfig');
@@ -18278,15 +18358,52 @@ module.exports = {
     type: "BlueprintInputMapTiles",
     options: {
       // tilePath: "https://a.tiles.mapbox.com/v3/examples.map-i86l3621/{z}/{x}/{y}@2x.png"
-      tilePath: "//stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"
+      tilePath: "//stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+      name: "Map Tiles"
     }
   },
   output: {
     type: "BlueprintOutputImageTiles",
     options: {
-      grids: [{
+      grids: [
+      {
+        zoom: 19,
+        tilesPerDirection: 3,
+        cullZoom: 17
+      },
+      {
+        zoom: 18,
+        tilesPerDirection: 3,
+        cullZoom: 16
+      },
+      {
+        zoom: 17,
+        tilesPerDirection: 3,
+        cullZoom: 15
+      },
+      {
+        zoom: 16,
+        tilesPerDirection: 3,
+        cullZoom: 14
+      },
+      {
+        zoom: 15,
+        tilesPerDirection: 3,
+        cullZoom: 13
+      },
+      {
         zoom: 14,
-        tilesPerDirection: 10,
+        tilesPerDirection: 3,
+        cullZoom: 12
+      },
+      {
+        zoom: 13,
+        tilesPerDirection: 5,
+        cullZoom: 11
+      },
+      {
+        zoom: 12,
+        tilesPerDirection: 6,
         cullZoom: 10
       }]
     }
