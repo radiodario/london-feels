@@ -40935,7 +40935,7 @@ var _ = require('underscore');
 var d3 = require('d3');
 var InfoUI = require('./TweetUI');
 
-var MAX_AGE = 1 * 60000; // 5 minutes;
+var MAX_AGE = 10 * 60000; // 5 minutes;
 
 var BlueprintOutputSentimentTweets = function(options) {
   var self = this;
