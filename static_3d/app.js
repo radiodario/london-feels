@@ -41117,7 +41117,7 @@ BlueprintOutputSentimentTweets.prototype.outputTweet = function(tweet) {
         lastPickedTweet = self.infoUI.panels[self.lastPickedIdClick].tweet;
         lastPickedTweet.picked = false;
         lastPickedTweet.mesh.material = material;
-        lastPickedTweet.circleMesh.material = circleMaterial;
+        lastPickedTweet.circle.material = circleMaterial;
 
         self.infoUI.removePanel(self.lastPickedIdClick);
         pickedId = undefined;
@@ -41410,6 +41410,10 @@ var world = new VIZI.World(worldOptions);
 var controls = new VIZI.ControlsMap(world.camera, {
   viewport: world.options.viewport
 });
+
+// var firstPerson = new VIZI.ControlsFirstPerson(world.camera, {
+//   viewport: world.options.viewport
+// });
 
 var pickControls = new VIZI.ControlsMousePick(world.camera, {
   scene: world.scene
