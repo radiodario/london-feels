@@ -28,6 +28,8 @@ h1 {
   float: left;
   margin-top: 3px;
   margin-left: -58px;
+  width: 48px;
+  height: 48px;
 }
 .tweet .tweet-header a span.username {
   font-weight: bold;
@@ -65,6 +67,32 @@ h1 {
 }
 .controls label {
   font-size: 0.75em;
+}
+.controls .item {
+  display: inline-block;
+  margin-right: 10px;
+  padding-right: 10px;
+  border-right: 1px solid gray;
+}
+.controls ul.nav {
+  list-syle-type: none;
+  margin: 0;
+  padding: 0;
+}
+.controls ul.nav li {
+  display: inline-block;
+  margin-left: 5px;
+}
+.controls ul.nav li:first-child {
+  margin-left: 0px;
+  margin-right: 10px;
+}
+.controls ul.nav li a {
+  color: white;
+  text-decoration: none;
+}
+.controls ul.nav li a:hover {
+  color: #d16fd6;
 }
 
 h1 {

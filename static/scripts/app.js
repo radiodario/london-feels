@@ -16,7 +16,7 @@ var L = require('leaflet');
 
 L.Icon.Default.imagePath = '/images/';
 
-var url = "";// "http://localhost:3080";
+var url = "http://london.feels.website";
 
 this.socket = io(url);
 
@@ -208,7 +208,7 @@ function calculateFeels () {
 
 
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_17edc831.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_8548f2aa.js","/")
 },{"./feels":2,"./ui/tweet.html":3,"buffer":5,"d3":4,"leaflet":9,"moment":10,"oMfpAn":8,"react":145,"socket.io-client":146}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = {
@@ -239,7 +239,8 @@ module.exports = {
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/feels.js","/")
 },{"buffer":5,"oMfpAn":8}],3:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-module.exports=(function() {var t = function anonymous(locals, filters, escape, rethrow) {
+module.exports=(function() {var t = function anonymous(locals, filters, escape, rethrow
+/**/) {
 escape = escape || function (html){
   return String(html)
     .replace(/&(?!#?[a-zA-Z0-9]+;)/g, '&amp;')
